@@ -14,6 +14,8 @@ import SeatPage from './SeatPage';
 import Billing from './Billing';
 import Payment from './Payment';
 import PageNotFound from './PageNotFound';
+import axios from 'axios';
+
 
 // ✅ New Layout component that uses `useLocation()`
 function Layout() {
