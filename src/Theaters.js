@@ -197,8 +197,10 @@ import Header from './Header';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { TheaterData } from './Api';
 import { ShowTimeData } from './Api';
+import direction from './direction4.gif';
 function Theaters() {
     const [MoviesData, setMoviesData] = useState([]);
+    const [selectedTheaterLocation, setSelectedTheatreLocation] = useState("");
 
 
     const [theater, setTheater] = useState([]);
@@ -275,6 +277,10 @@ function Theaters() {
 
     const { movie, cinema, time } = movieData;
 
+
+    const handleLocationClick = (address) => {
+        setSelectedTheatreLocation(address);
+    };
     return (
         <div className="col-md-12">
             <Header />
@@ -340,24 +346,58 @@ function Theaters() {
                         <div className='col-md-8 theater '>
                             {theater.map((item, index) => (
                                 <div key={item.id || index} className='bg-light theaterbox'>
-                                    <h3 h3 className="p-2" > {item.name}</h3>
-                                    <div className="row m-1 ">
-                                        <div className=" d-flex align-item-center">
-                                            <div className="features">
-                                                {/* <button type="button" className="rounded-pill text-bg-light btn-outline-danger btn-sm m-1">{item.location}</button> */}
-                                                <button type="button" className="rounded-pill text-bg-light btn-outline-danger btn-sm m-1">Direction</button>
-
-                                                {/* <button type="button" className="rounded-pill text-bg-light btn-outline-danger btn-sm">Information</button> */}
+                                    <div className='d-flex align-items-center justify-content-between'>
+                                        <div className='d-flex align-items-center justify-content-center '>
+                                            <h3 className="p-2 m-2" > {item.name}:</h3>
+                                            {/* <div> */}
+                                            <p className="mx- mt-3">{item.facilities}</p>
+                                            {/* </div> */}
+                                        </div>
+                                        <div data-bs-toggle="modal" data-bs-target={`#staticBackdrop-${index}`} onClick={() => handleLocationClick(item.location)}>
+                                            <img src={direction} alt='gif' className='directionimg m-3' />
+                                        </div>
+                                        <div className="modal fade" id={`staticBackdrop-${index}`} data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div className="modal-dialog modal-dialog-centered">
+                                                <div className="modal-content">
+                                                    <div className="modal-header">
+                                                        <h5 className="modal-title" id="staticBackdropLabel">Direction to {item.name}</h5>
+                                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div className="modal-body">
+                                                        <iframe
+                                                            width="100%"
+                                                            height="300"
+                                                            src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                                                                selectedTheaterLocation
+                                                            )}&output=embed`}
+                                                            allowFullScreen
+                                                            loading="lazy"
+                                                            referrerPolicy="no-referrer-when-downgrade"
+                                                        ></iframe>
+                                                    </div>
+                                                    <div className="modal-footer">
+                                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => handleLocationClick(item.location)}>get Direction</button>
+                                                        {/* <a href={`https://www.google.com/maps/dir/?api=1&destination=Cinepolis%3A%20Nexus%20Ahmedabad%20One%2C%20Ahmedabad%2C%20Gujarat`} target="_blank" className="btn btn-primary">get Direction</a> */}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className=" d-flex align-item-center">
+                                        <div className="features d-flex">
+                                            <div>
+                                                <h6 className='mt-2 m-3 '>{item.location}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row m-1 ">
 
-                                        <div className=" text-end">
+                                        <div className="timebtn">
                                             {Time.map((item, index) => (
-                                                <button type="button" className="btn btn-danger showbtn" data-bs-toggle="modal" data-bs-target={`#modal-${index}`} key={item.id || index}>
+                                                <button type="button" className="btn btn-outline-danger showbtn m-3" data-bs-toggle="modal" data-bs-target={`#modal-${index}`} key={item.id || index}>
                                                     {item.showTime}
                                                 </button>
                                             ))}
-
 
                                             {/* Modal */}
                                             <div className="modal fade" id={`modal-${index}`} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="modalLabel" aria-hidden="true">
@@ -397,7 +437,7 @@ function Theaters() {
                                             {/* End Modal */}
                                         </div>
                                     </div>
-                                    <p className="m-3">{item.facilities}</p>
+
                                 </div>
                             ))}
 

@@ -636,6 +636,12 @@ a:hover {
 
 .showbtn {
   margin: 10px;
+
+}
+
+.directionimg {
+  width: 40px;
+  height: 40px;
 }
 
 @media only screen and (max-width:320px) {
@@ -817,4 +823,17 @@ a:hover {
 
 .moviename {
   margin-top: -10px;
+}
+
+.features {
+  margin-top: -10px;
+  color: #484545;
+}
+
+.timebtn {
+  width: 100%;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

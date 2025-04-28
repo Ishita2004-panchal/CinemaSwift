@@ -1,5 +1,5 @@
 // Base server URL
-export const ApiServer = 'http://192.168.205.36:8081';
+export const ApiServer = 'http://192.168.1.32:8081';
 
 // Generic fetch helper
 const fetchData = async (endpoint) => {
